@@ -1,0 +1,70 @@
+{
+  "logo": "千葉ケアタクシー",
+  "sections": [
+    {
+      "id": "1",
+      "type": "normal",
+      "title": "わたしたちについて",
+      "text": "介護・福祉タクシーのプロフェッショナル。安心で快適なサービスをご提供します。",
+      "image": "https://images.unsplash.com/photo-1576091160550-112173f7f869?w=800&h=600&fit=crop",
+      "bgImage": "https://images.unsplash.com/photo-1576091160550-112173f7f869?w=800&h=600&fit=crop",
+      "visible": true
+    },
+    {
+      "id": "2",
+      "type": "cards",
+      "title": "私たちのサービス",
+      "text": "多様なサービスで皆様のニーズにお応えします",
+      "cards": [
+        {
+          "title": "通院送迎",
+          "text": "病院への通院、診察の付き添い"
+        },
+        {
+          "title": "介護施設送迎",
+          "text": "デイサービス、介護施設への送迎"
+        },
+        {
+          "title": "日常生活支援",
+          "text": "買い物、外出、散歩などをサポート"
+        }
+      ],
+      "image": "https://images.unsplash.com/photo-1576102160562-40f08b0c3a4b?w=800&h=600&fit=crop",
+      "bgImage": "https://images.unsplash.com/photo-1576102160562-40f08b0c3a4b?w=800&h=600&fit=crop",
+      "visible": true
+    },
+    {
+      "id": "1769943869380",
+      "type": "normal",
+      "title": "新規セクション",
+      "text": "説明テキスト",
+      "image": "https://images.unsplash.com/photo-1631217314831-c02b47c3649d?w=800&h=600&fit=crop",
+      "bgImage": "https://images.unsplash.com/photo-1579154204601-01d430751da8?w=800&h=600&fit=crop",
+      "titleSize": 2.5,
+      "align": "center",
+      "visible": true
+    }
+  ],
+  "cta": {
+    "title": "お気軽にお問い合わせください",
+    "subtitle": "ご不明な点やご質問などお気軽にご連絡ください",
+    "phone": {
+      "number": "047-XXX-XXXX",
+      "label": "電話する",
+      "icon": "☎️",
+      "color": "#4CAF50"
+    },
+    "line": {
+      "url": "https://line.me/R/ti/p/",
+      "label": "LINEで相談",
+      "icon": "💬",
+      "color": "#00B900"
+    },
+    "booking": {
+      "url": "https://booking.example.com",
+      "label": "予約する",
+      "icon": "📅",
+      "color": "#2196F3"
+    }
+  }
+}
