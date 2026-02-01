@@ -1,64 +1,57 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GAS 接続テスト</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif; padding: 16px; }
+    h1 { margin: 0 0 12px; }
+    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
+    .muted { color: #666; font-size: 12px; }
+    .ok { color: #0a7; font-weight: 700; }
+    .ng { color: #c00; font-weight: 700; }
+  </style>
 </head>
 <body>
 
 <h1>GitHub → GAS テスト</h1>
-
-<div id="out"></div>
+<div class="muted">※ GET で叩いて CORS（プリフライト）を回避します</div>
 
 <script>
-(async () => {
-  // ★ここだけ：あなたのGASの /exec を入れる（末尾は必ず小文字の exec）
+  // ★新しいデプロイURL（/exec）
   const GAS_EXEC = "https://script.google.com/macros/s/AKfycbzd5Vge6C_jaNrYV0ZegeQuhXPSQNr27sb4NtmfTDvocJ8T7qmBqE43YKsNBXQ8Dj2mEg/exec";
 
-  // calc を GET で呼ぶ（CORS回避）
-  const params = new URLSearchParams({
-    action: "calc",
-    distanceKm: "10",
-    minutes: "30",
+  // テスト入力
+  const distanceKm = 10;
+  const minutes = 30;
 
-    // キャッシュ回避（GitHub Pages更新直後に効く）
-    _ts: String(Date.now())
-  });
+  // キャッシュ回避も込みでURL生成
+  const url =
+    GAS_EXEC
+    + "?action=calc"
+    + "&distanceKm=" + encodeURIComponent(distanceKm)
+    + "&minutes=" + encodeURIComponent(minutes)
+    + "&_ts=" + Date.now();
 
-  const url = `${GAS_EXEC}?${params.toString()}`;
+  document.body.insertAdjacentHTML("beforeend", `<pre>REQUEST URL:\n${url}</pre>`);
 
-  const out = document.getElementById("out");
-  const add = (title, obj) => {
-    const pre = document.createElement("pre");
-    pre.textContent = `${title}\n` + JSON.stringify(obj, null, 2);
-    out.appendChild(pre);
-  };
-
-  try {
-    add("REQUEST URL:", { url });
-
-    const r = await fetch(url, {
-      method: "GET",
-      // mode: "cors" はデフォルトだが明示してもOK
-      mode: "cors"
+  fetch(url)
+    .then(r => r.json())
+    .then(d => {
+      const isOk = (d && d.ok === true) || (d && d.isOk === true);
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<div class="${isOk ? 'ok' : 'ng'}">${isOk ? 'OK' : 'NG'}</div>` +
+        `<pre>RESPONSE JSON:\n${JSON.stringify(d, null, 2)}</pre>`
+      );
+    })
+    .catch(err => {
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<div class="ng">FETCH ERROR</div><pre>${String(err)}</pre>`
+      );
     });
-
-    // HTTPエラー表示
-    if (!r.ok) {
-      const text = await r.text().catch(() => "");
-      add("HTTP ERROR:", { status: r.status, statusText: r.statusText, body: text });
-      return;
-    }
-
-    // JSONパース
-    const data = await r.json();
-    add("RESPONSE JSON:", data);
-
-  } catch (err) {
-    add("FETCH ERROR:", { message: String(err), stack: err && err.stack ? String(err.stack) : null });
-  }
-})();
 </script>
 
 </body>
