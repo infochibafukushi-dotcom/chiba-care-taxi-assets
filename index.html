@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calling...</title>
+</head>
+<body>
+    <script>
+        // 1. 電話番号の設定（ハイフンなし）
+        var telNumber = "09063314289"; 
+
+        // 2. LINEブラウザ判定
+        if (navigator.userAgent.indexOf('Line') > -1) {
+            // LINE内なら「外部ブラウザで開け」という命令を付けて自分自身をリロード
+            var currentUrl = window.location.href.split('?');
+            window.location.href = currentUrl[0] + "?openExternalBrowser=1";
+        } else {
+            // すでに外部ブラウザ（Safari/Chrome）なら即座に電話起動
+            window.location.href = "tel:" + telNumber;
+        }
+    </script>
+    <div style="text-align:center; padding-top:50px; font-family:sans-serif;">
+        <p>お電話をお繋ぎしています...</p>
+        <a href="tel:0312345678" style="font-size:20px; color:#00b900;">画面が動かない場合はここをタップ</a>
+    </div>
+</body>
+</html>
